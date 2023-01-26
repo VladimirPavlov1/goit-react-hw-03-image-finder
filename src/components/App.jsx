@@ -8,6 +8,7 @@ import axios from 'axios';
 
 
 
+
 class App extends Component{
   
 state={
@@ -15,7 +16,8 @@ state={
   page:1,
   imagesData: null,
   searchName:'',
-  status:'idle'
+  status:'idle',
+  
 }
 
 componentDidUpdate(prevProps, prevState) {
@@ -63,7 +65,7 @@ componentDidUpdate(prevProps, prevState) {
         <Searchbar onSubmit={this.handleSubmit} page={this.state.page} />
         <ImageGallery items={this.state.imagesData} status={this.state.status}/>
         <Button onClick={this.handleClick}/>
-        {/* <Modal/>  */}
+         
      
     </Container>
     )
