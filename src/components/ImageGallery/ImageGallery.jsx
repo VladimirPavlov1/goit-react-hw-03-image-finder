@@ -1,23 +1,18 @@
 import { Component } from 'react';
 import  ImageGalleryItem  from '../ImageGalleryItem/ImageGalleryItem';
 import { Item, List } from './ImageGallery.styled';
-
 import { Loader } from 'components/Loader/Loader';
 
 
 
 class ImageGallery extends Component {
-  state = {
-  
-    
    
-  };
- 
-  
+
 
   render() {
     console.log(this.props.items);
     const { status, error,items } = this.props;
+   
     if (status === 'idle') {
       return <div>Введіть ваш запит</div>;
     }
@@ -34,15 +29,18 @@ class ImageGallery extends Component {
 
     if (status === 'resolved') {
       return (
-      
+        
         <List>
-          {items.map(item=>(
-           
-            <Item key={item.id}>
-                <ImageGalleryItem item={item} />
+              {items.map(item=>(
+              
+                <Item key={item.id}>
+                    <ImageGalleryItem item={item} />
             </Item>
           ))}
         </List>
+        
+   
+      
        
       
       

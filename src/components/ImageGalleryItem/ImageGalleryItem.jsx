@@ -7,25 +7,22 @@ export default class ImageGalleryItem extends Component{
     state={
         showModal:false,
     }
-
+    
     componentDidMount(){
+        console.log('didmount')
         window.addEventListener('keydown',this.handleKey)
-    }
-
-    componentWillUnmount(){
-        window.removeEventListener('keydown',this.handleKey)
-    }
-
+      }
+    
+    
     handleKey=e=>{
         if(e.code==='Escape'){
-            this.setState(prevState=>({
-                showModal:!prevState.showModal
-            }))
+            this.toggleModal();
         }
     }
     
     toggleModal=()=>{
-        this.setState(prevState=>({
+        console.log('click')
+      return this.setState(prevState=>({
             showModal:!prevState.showModal
         }))
     
@@ -34,7 +31,10 @@ export default class ImageGalleryItem extends Component{
     render(){ 
         const {item:{webformatURL,tags,largeImageURL
         }}=this.props;
-        const {showModal}= this.state;
+        const {showModal}=this.state;
+
+
+      
         return(
         <div>
              <BtnModal onClick={()=>this.toggleModal()}>
@@ -42,11 +42,11 @@ export default class ImageGalleryItem extends Component{
             </BtnModal>
           
         
-            {showModal&&<Modal>
-                           
-                            <img src={largeImageURL} alt="tags" />
-                        </Modal>
-            }
+           { showModal&&<Modal>
+                
+                <img src={largeImageURL} alt="tags" />
+            </Modal>}
+            
         </div>
         
 

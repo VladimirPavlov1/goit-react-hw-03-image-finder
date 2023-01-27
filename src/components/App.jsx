@@ -20,6 +20,8 @@ state={
   
 }
 
+
+
 componentDidUpdate(prevProps, prevState) {
   if (prevState.searchName !== this.state.searchName||prevState.page!==this.state.page) {
     this.setState({ status: 'pending' });
