@@ -15,10 +15,9 @@ class App extends Component{
 state={
  
   page:1,
-  imagesData: null,
+  imagesData: [],
   searchName:'',
   status:'idle',
-  showModal:false,
   error:'',
   
 }
@@ -28,8 +27,7 @@ state={
 componentDidUpdate(prevProps, prevState) {
   if (prevState.searchName !== this.state.searchName||prevState.page!==this.state.page) {
     this.setState({ status: 'pending' });
-    console.log(prevProps.searchName);
-    console.log(this.props.searchName);
+   
 
     axios({
       url: `https://pixabay.com/api/?`,
@@ -43,17 +41,18 @@ componentDidUpdate(prevProps, prevState) {
       },
     })
       .then(response =>{ return response.data.hits})
-      .then(data =>
-        this.setState(prevState=>({ imagesData:[...prevState.imagesData,...data], status: 'resolved'}))
-      )
+      .then(data =>{
+        if(data.length>0)
+        {this.setState(prevState=>({ imagesData:[...prevState.imagesData,...data], status: 'resolved'}))}else{
+          alert('oioi')
+        }})
       .catch(({message}) =>{message='Щось пішло не так, спробуйте ще раз';
     return this.setState({ status: 'rejected',error:message,imagesData:null,})});
   }
 }
 
-// 
-  handleSubmit=(searchName,page,imagesData)=>{
-    this.setState({searchName,page,imagesData})
+  handleSubmit=(searchName)=>{
+    this.setState({searchName,page:1,imagesData:[]})
   }
 
   handleClick=()=>{
@@ -74,7 +73,7 @@ componentDidUpdate(prevProps, prevState) {
     return (
       <Container>
         <Searchbar onSubmit={this.handleSubmit} page={this.state.page} />
-        <ImageGallery items={this.state.imagesData} status={this.state.status} error={this.state.error}/>
+        <ImageGallery items={imagesData} status={this.state.status} error={this.state.error}/>
         {imagesData&& <Button onClick={this.handleClick}/>}
       
      

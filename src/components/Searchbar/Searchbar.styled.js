@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { GoSearch } from "react-icons/go"
 
 export const Header = styled.header`
  top: 0;
@@ -71,4 +72,9 @@ export const Input = styled.input`
   ::placeholder{
     font-family: inherit;
     font-size: 18px;}
+`;
+export const SearchIcon = styled(GoSearch)`
+width: 30px;
+height: 30px;
+
 `;

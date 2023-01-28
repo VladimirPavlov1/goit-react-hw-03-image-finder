@@ -35,3 +35,4 @@ export const Error = styled.div`
 color:red;
 font-size: 24px;
 `;
+

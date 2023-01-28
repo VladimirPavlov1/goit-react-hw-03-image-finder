@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Form, Header, SearchBtn, Label, Input } from './Searchbar.styled';
+import { Form, Header, SearchBtn, Label, Input,SearchIcon } from './Searchbar.styled';
 
 class Searchbar extends Component {
   state = {
@@ -22,7 +22,7 @@ class Searchbar extends Component {
       <Header>
         <Form onSubmit={this.handleSubmit}>
           <SearchBtn type="submit">
-            <Label>Search</Label>
+          <SearchIcon/> <Label></Label>
           </SearchBtn>
 
           <Input

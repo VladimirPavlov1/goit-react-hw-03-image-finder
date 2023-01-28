@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 
+
 export const BtnLoad = styled.button`
   padding: 8px 16px;
   border-radius: 2px;
@@ -22,4 +23,5 @@ export const BtnLoad = styled.button`
     :hover,:focus{
         background-color: #303f9f;
     }
+    
 `;
