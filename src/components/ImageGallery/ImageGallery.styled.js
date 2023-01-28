@@ -30,3 +30,8 @@ fill: white;
 width:30px;
 height: 30px;
 `;
+
+export const Error = styled.div`
+color:red;
+font-size: 24px;
+`;

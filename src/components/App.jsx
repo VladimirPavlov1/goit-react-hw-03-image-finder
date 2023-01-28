@@ -19,7 +19,7 @@ state={
   searchName:'',
   status:'idle',
   showModal:false,
-  error:null,
+  error:'',
   
 }
 
@@ -32,7 +32,7 @@ componentDidUpdate(prevProps, prevState) {
     console.log(this.props.searchName);
 
     axios({
-      url: `https://pixabay.com/ap/?`,
+      url: `https://pixabay.com/api/?`,
       params: {
         q: this.state.searchName,
         page: this.state.page,

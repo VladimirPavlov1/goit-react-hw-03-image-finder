@@ -6,12 +6,14 @@ const modalRoot=document.querySelector('#modal-root');
 
 export default class Modal extends Component{
 
-    
+  
 
     render(){
+        const{children}=this.props
+       
     return createPortal(
         <Backdrop>
-            <ModalWindow>{this.props.children}</ModalWindow>
+            <ModalWindow>{children}</ModalWindow>
         </Backdrop>,
      modalRoot)}
 }
