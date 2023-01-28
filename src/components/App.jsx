@@ -9,6 +9,7 @@ import axios from 'axios';
 
 
 
+
 class App extends Component{
   
 state={
@@ -17,6 +18,8 @@ state={
   imagesData: null,
   searchName:'',
   status:'idle',
+  showModal:false,
+  error:null,
   
 }
 
@@ -29,45 +32,51 @@ componentDidUpdate(prevProps, prevState) {
     console.log(this.props.searchName);
 
     axios({
-      url: `https://pixabay.com/api/?`,
+      url: `https://pixabay.com/ap/?`,
       params: {
         q: this.state.searchName,
         page: this.state.page,
         key: '31785434-56897078df27680e7b71d8ebf',
         image_type: 'photo',
         orientation: 'horizontal',
-        per_page: 3,
+        per_page: 12,
       },
     })
-      .then(response => response.data.hits)
+      .then(response =>{ return response.data.hits})
       .then(data =>
-        this.setState({ imagesData: data, status: 'resolved'})
+        this.setState(prevState=>({ imagesData:[...prevState.imagesData,...data], status: 'resolved'}))
       )
-      .catch(error => this.setState({ error, status: 'rejected' }));
+      .catch(({message}) =>{message='Щось пішло не так, спробуйте ще раз';
+    return this.setState({ status: 'rejected',error:message,imagesData:null,})});
   }
 }
 
-
-  handleSubmit=(searchName,page)=>{
-    this.setState({searchName,page})
+// 
+  handleSubmit=(searchName,page,imagesData)=>{
+    this.setState({searchName,page,imagesData})
   }
 
   handleClick=()=>{
     this.setState(prevState=>({
-      page:prevState.page+1
+      page:prevState.page+1,
+     
     }))
   }
+ 
+
+
 
   
   render(){
-   
 
+    const {imagesData}=this.state
+    console.log(imagesData)
     return (
       <Container>
         <Searchbar onSubmit={this.handleSubmit} page={this.state.page} />
-        <ImageGallery items={this.state.imagesData} status={this.state.status}/>
-        <Button onClick={this.handleClick}/>
-         
+        <ImageGallery items={this.state.imagesData} status={this.state.status} error={this.state.error}/>
+        {imagesData&& <Button onClick={this.handleClick}/>}
+      
      
     </Container>
     )

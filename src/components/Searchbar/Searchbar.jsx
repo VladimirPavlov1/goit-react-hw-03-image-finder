@@ -15,7 +15,7 @@ class Searchbar extends Component{
     handleSubmit=e=>{
         e.preventDefault();
         if(this.state.searchName.trim().toLocaleLowerCase()!==''){
-            this.props.onSubmit(this.state.searchName,1)
+            this.props.onSubmit(this.state.searchName,1,[])
             
         }
         this.setState({searchName:''})

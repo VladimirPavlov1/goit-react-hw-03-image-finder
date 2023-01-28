@@ -11,7 +11,7 @@ export const Img = styled.img`
     transform: scale(1.03);
     cursor: zoom-in;}
 `;
-export const BtnModal = styled.button`
+export const Wrapper = styled.div`
 padding: 0;
 border: none;
 width: 100%;
