@@ -1,6 +1,8 @@
 import { Component } from 'react';
 import { Form, Header, SearchBtn, Label, Input,SearchIcon } from './Searchbar.styled';
 
+
+
 class Searchbar extends Component {
   state = {
     searchName: '',
@@ -10,11 +12,13 @@ class Searchbar extends Component {
     this.setState({ searchName: e.currentTarget.value });
   };
   handleSubmit = e => {
+    console.log('submitting')
     e.preventDefault();
     if (this.state.searchName.trim().toLocaleLowerCase() !== '') {
-      this.props.onSubmit(this.state.searchName, 1, []);
+      this.props.onSubmit(this.state.searchName);
     }
     this.setState({ searchName: '' });
+    this.props.onClear()
   };
 
   render() {
