@@ -36,9 +36,10 @@ class App extends Component {
           per_page: 12,
         },
       })
-        .then(response => {
-          return response.data.hits;
-        })
+        .then(response =>{ 
+         return response.data.hits;
+         
+    })
         .then(data => {
           if (data.length > 0) {
             this.setState(prevState => ({

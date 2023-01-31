@@ -1,10 +1,16 @@
 import { createPortal } from 'react-dom';
 import { Component } from 'react';
 import { Backdrop, ModalWindow } from './Modal.styled';
+import PropTypes from 'prop-types';
 
 const modalRoot = document.querySelector('#modal-root');
 
 export default class Modal extends Component {
+  static propTypes={
+    onClose:PropTypes.func.isRequired,
+  }
+  
+  
   state = {
     showModal: false,
   };
