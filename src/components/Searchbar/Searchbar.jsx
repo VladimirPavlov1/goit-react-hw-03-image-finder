@@ -1,24 +1,39 @@
 import { Component } from 'react';
-import { Form, Header, SearchBtn, Label, Input,SearchIcon } from './Searchbar.styled';
-
-
+import {
+  Form,
+  Header,
+  SearchBtn,
+  Label,
+  Input,
+  SearchIcon,
+} from './Searchbar.styled';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import PropTypes from 'prop-types';
 
 class Searchbar extends Component {
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+    onClear: PropTypes.func.isRequired,
+  };
+
   state = {
     searchName: '',
   };
 
   handleChange = e => {
-    this.setState({ searchName: e.currentTarget.value });
+    this.setState({ searchName: e.currentTarget.value.toLocaleLowerCase() });
   };
   handleSubmit = e => {
-    console.log('submitting')
     e.preventDefault();
-    if (this.state.searchName.trim().toLocaleLowerCase() !== '') {
-      this.props.onSubmit(this.state.searchName);
+    if (this.state.searchName.trim() === '') {
+      toast.warn('Введіть ваш запит', {});
+
+      return;
     }
+    this.props.onSubmit(this.state.searchName);
     this.setState({ searchName: '' });
-    this.props.onClear()
+    this.props.onClear();
   };
 
   render() {
@@ -26,8 +41,9 @@ class Searchbar extends Component {
       <Header>
         <Form onSubmit={this.handleSubmit}>
           <SearchBtn type="submit">
-          <SearchIcon/> <Label></Label>
+            <SearchIcon /> <Label></Label>
           </SearchBtn>
+          <ToastContainer />
 
           <Input
             onChange={this.handleChange}

@@ -1,3 +1,6 @@
+@import 'react-toastify/dist/ReactToastify.css';
+
+
 @import-normalize; /* bring in normalize.css styles */
 
 body {

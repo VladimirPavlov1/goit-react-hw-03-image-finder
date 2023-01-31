@@ -17,11 +17,10 @@ export default class Modal extends Component {
     window.removeEventListener('keydown', this.handleKey);
   }
 
-  handleKey = e =>{
-    if (e.code === 'Escape'){
-
-        this.props.onClose();
-      }
+  handleKey = e => {
+    if (e.code === 'Escape') {
+      this.props.onClose();
+    }
   };
 
   handleBackdrop = e => {

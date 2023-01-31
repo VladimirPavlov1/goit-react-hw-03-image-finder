@@ -4,30 +4,18 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import { Container } from './App.styled';
 import { Button } from './Button/Button';
 import axios from 'axios';
-import { ToastContainer,toast } from "react-toastify";
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-
-const notify=()=>{
-  toast.info('🦄 Wow so easy!', {
-    position: "bottom-center",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "colored",
-    });
-}
+import { Loader } from './Loader/Loader';
 
 class App extends Component {
   state = {
     page: 1,
-    imagesData: [],
+    items: [],
     searchName: '',
-    status: 'idle',
+
     error: '',
+    isLoading: false,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -35,7 +23,7 @@ class App extends Component {
       prevState.searchName !== this.state.searchName ||
       prevState.page !== this.state.page
     ) {
-      this.setState({ status: 'pending' });
+      this.setState({ isLoading: true });
 
       axios({
         url: `https://pixabay.com/api/?`,
@@ -54,27 +42,26 @@ class App extends Component {
         .then(data => {
           if (data.length > 0) {
             this.setState(prevState => ({
-              imagesData: [...prevState.imagesData, ...data],
-              status: 'resolved',
+              items: [...prevState.items, ...data],
             }));
-          } else {
-            alert('oioi');
+            return;
           }
+          toast('За вашим запитом нічого не знайдено', { autoClose: 3000 });
         })
         .catch(({ message }) => {
-          message = 'Щось пішло не так, спробуйте ще раз';
-          return this.setState({
-            status: 'rejected',
+          message = toast('Щось пішло не так, спробуйте ще раз');
+          this.setState({
             error: message,
-            imagesData: null,
           });
+        })
+        .finally(() => {
+          this.setState({ isLoading: false });
         });
     }
   }
 
   handleSubmit = searchName => {
-    console.log('app.submit')
-    this.setState({ searchName, page: 1, imagesData: [] });
+    this.setState({ searchName: searchName });
   };
 
   handleClick = () => {
@@ -82,38 +69,28 @@ class App extends Component {
       page: prevState.page + 1,
     }));
   };
-  onClear=()=>{
-    this.setState({page:1,imagesData:[]})
-  }
+  onClear = () => {
+    this.setState({ page: 1, items: [] });
+  };
 
   render() {
-    const { imagesData } = this.state;
-    console.log(imagesData);
-  
+    const { items, isLoading } = this.state;
+
     return (
       <Container>
-        <Searchbar onSubmit={this.handleSubmit} onClear={this.onClear}/>
+        <Searchbar onSubmit={this.handleSubmit} onClear={this.onClear} />
+        {isLoading && <Loader />}
         <ImageGallery
-          items={imagesData}
+          items={items}
           status={this.state.status}
           error={this.state.error}
         />
-        {imagesData.length===0?(<div>{notify}</div>):(
-          
-          <Button onClick={this.handleClick}/>)
-        }
-        <ToastContainer
-          position="bottom-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-          />
+
+        {items.length === 12 && items.length > 0 && (
+          <Button onClick={this.handleClick} />
+        )}
+
+        <ToastContainer />
       </Container>
     );
   }
