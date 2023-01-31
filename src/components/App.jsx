@@ -61,7 +61,7 @@ class App extends Component {
   }
 
   handleSubmit = searchName => {
-    this.setState({ searchName: searchName });
+    this.setState({ searchName: searchName, page: 1, items: [] });
   };
 
   handleClick = () => {
@@ -69,24 +69,17 @@ class App extends Component {
       page: prevState.page + 1,
     }));
   };
-  onClear = () => {
-    this.setState({ page: 1, items: [] });
-  };
 
   render() {
     const { items, isLoading } = this.state;
-
+   
     return (
       <Container>
-        <Searchbar onSubmit={this.handleSubmit} onClear={this.onClear} />
+        <Searchbar onSubmit={this.handleSubmit} />
         {isLoading && <Loader />}
-        <ImageGallery
-          items={items}
-          status={this.state.status}
-          error={this.state.error}
-        />
+        <ImageGallery items={items} />
 
-        {items.length === 12 && items.length > 0 && (
+        {items.length > 0 && items.length % 12 <= 0 && (
           <Button onClick={this.handleClick} />
         )}
 

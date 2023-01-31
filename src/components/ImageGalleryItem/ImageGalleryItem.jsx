@@ -6,10 +6,9 @@ import Modal from 'components/Modal/Modal';
 export default class ImageGalleryItem extends Component {
   static propTypes = {
     item: PropTypes.shape({
-          webformatURL: PropTypes.string.isRequired,
-          tags: PropTypes.string.isRequired,
-          largeImageURL:PropTypes.string.isRequired,
-          
+      webformatURL: PropTypes.string.isRequired,
+      tags: PropTypes.string.isRequired,
+      largeImageURL: PropTypes.string.isRequired,
     }),
   };
   state = {
@@ -17,7 +16,6 @@ export default class ImageGalleryItem extends Component {
   };
 
   toggleModal = () => {
-   
     this.setState(({ showModal }) => ({
       showModal: !showModal,
     }));

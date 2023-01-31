@@ -14,7 +14,6 @@ import PropTypes from 'prop-types';
 class Searchbar extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
-    onClear: PropTypes.func.isRequired,
   };
 
   state = {
@@ -33,7 +32,6 @@ class Searchbar extends Component {
     }
     this.props.onSubmit(this.state.searchName);
     this.setState({ searchName: '' });
-    this.props.onClear();
   };
 
   render() {
