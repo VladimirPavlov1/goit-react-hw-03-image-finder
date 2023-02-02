@@ -13,7 +13,7 @@ class App extends Component {
     page: 1,
     items: [],
     searchName: '',
-
+    totalHits:0,
     error: '',
     isLoading: false,
   };
@@ -37,13 +37,24 @@ class App extends Component {
         },
       })
         .then(response =>{ 
-         return response.data.hits;
+          console.log(response.data)
+         return response.data;
+
          
     })
         .then(data => {
-          if (data.length > 0) {
+       
+          
+         
+          console.log(data.totalHits)
+          console.log(data.hits.length)
+          console.log(this.state.page)
+         
+          if (data.hits.length > 0) {
+           
             this.setState(prevState => ({
-              items: [...prevState.items, ...data],
+              items: [...prevState.items, ...data.hits],totalHits:data.totalHits,
+
             }));
             return;
           }
@@ -72,15 +83,15 @@ class App extends Component {
   };
 
   render() {
-    const { items, isLoading } = this.state;
-   
+    const { items, isLoading,totalHits } = this.state;
+  
     return (
       <Container>
         <Searchbar onSubmit={this.handleSubmit} />
         {isLoading && <Loader />}
         <ImageGallery items={items} />
 
-        {items.length > 0 && items.length % 12 <= 0 && (
+        {items.length > 0 && items.length<totalHits && (
           <Button onClick={this.handleClick} />
         )}
 
